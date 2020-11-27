@@ -32,7 +32,7 @@ public class UpdateBoardController implements Controller {
 		
 		// 3. 화면 네비게이션
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getBoardList.do");
+		mav.setViewName("redirect:getBoardList.do");
 		return mav;	
 	}
 

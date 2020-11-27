@@ -26,4 +26,11 @@
 	<bean id="updateBoard" class="com.junngo.view.board.UpdateBoardController"></bean>
 	<bean id="deleteBoard" class="com.junngo.view.board.DeleteBoardController"></bean>
 	<bean id="logout" class="com.junngo.view.user.LogoutController"></bean>
+	
+	<!-- ViewResolver 등록 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/board/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
 </beans>
