@@ -27,7 +27,7 @@ public class BoardController {
 		conditionMap.put("내용", "CONTENT");
 		return conditionMap;
 	}
-	
+
 	// 글 등록
 	@RequestMapping(value = "/insertBoard.do")
 	public String insertBoard(BoardVO vo, BoardDAO boardDAO) {
@@ -65,7 +65,11 @@ public class BoardController {
 
 	// 글 목록 검색
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(BoardVO vo, BoardDAO boardDAO, Model model) {		
+	public String getBoardList(BoardVO vo, BoardDAO boardDAO, Model model) {
+		System.out.println(vo.getSearchKeyword());
+		if(vo.getSearchCondition() == null) vo.setSearchCondition("TITLE");
+		if(vo.getSearchKeyword() == null) vo.setSearchKeyword("");
+
 		// Model 정보 저장
 		model.addAttribute("boardList", boardService.getBoardList(vo));																
 		return "getBoardList.jsp"; // View 이름 리턴
