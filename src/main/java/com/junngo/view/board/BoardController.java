@@ -1,5 +1,7 @@
 package com.junngo.view.board;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.junngo.biz.board.BoardService;
 import com.junngo.biz.board.BoardVO;
@@ -30,7 +33,14 @@ public class BoardController {
 
 	// 글 등록
 	@RequestMapping(value = "/insertBoard.do")
-	public String insertBoard(BoardVO vo, BoardDAO boardDAO) {
+	public String insertBoard(BoardVO vo, BoardDAO boardDAO) throws IOException {
+		
+		MultipartFile uploadFile = vo.getUploadFile();
+		if(!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();
+			System.out.println(fileName);
+			uploadFile.transferTo(new File("C:/Users/lg/eclipse-workspace/file_temp/"+fileName));
+		}
 		boardService.insertBoard(vo);
 		return "getBoardList.do";
 	}
@@ -66,7 +76,6 @@ public class BoardController {
 	// 글 목록 검색
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, BoardDAO boardDAO, Model model) {
-		System.out.println(vo.getSearchKeyword());
 		if(vo.getSearchCondition() == null) vo.setSearchCondition("TITLE");
 		if(vo.getSearchKeyword() == null) vo.setSearchKeyword("");
 
